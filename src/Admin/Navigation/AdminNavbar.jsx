@@ -52,7 +52,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -62,13 +61,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function AdminNavbar({handleSideBarViewInMobile}) {
+export default function AdminNavbar({ handleSideBarViewInMobile }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
-  const dispatch=useDispatch();
-  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -90,11 +89,6 @@ export default function AdminNavbar({handleSideBarViewInMobile}) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () => {
-    // handleCloseUserMenu();
-    dispatch(logout());
-    navigate("/")
-  };
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -168,22 +162,33 @@ export default function AdminNavbar({handleSideBarViewInMobile}) {
       </MenuItem>
     </Menu>
   );
-// https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + isLargeScreen, backgroundColor: 'rgb(0, 0, 22)' }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + isLargeScreen,
+          backgroundColor: 'rgb(0, 0, 22)',
+        }}
+      >
         <Toolbar>
-          {!isLargeScreen && <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={handleSideBarViewInMobile}
-          >
-            <MenuIcon />
-          </IconButton>}
-          <Avatar alt="Zosh" src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png" />
+          {!isLargeScreen && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={handleSideBarViewInMobile}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          <Avatar
+            alt="Zosh"
+            src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png"
+          />
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -200,11 +205,7 @@ export default function AdminNavbar({handleSideBarViewInMobile}) {
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
+            <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
@@ -235,7 +236,9 @@ export default function AdminNavbar({handleSideBarViewInMobile}) {
           </Box>
         </Toolbar>
       </AppBar>
-      
+      {/* ✅ Added both menus to be rendered */}
+      {renderMobileMenu}
+      {renderMenu}
     </Box>
   );
 }
